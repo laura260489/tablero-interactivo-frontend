@@ -1,0 +1,77 @@
+<div class="flex flex-col min-h-[100vh] gap-5">
+  <div class="w-full top-0 grid grid-cols-[1fr_2fr_1fr] gap-4 bg-[#adcef5] px-[50px] py-[15px]">
+    <div class="flex items-center justify-start">
+      <span class="text-lg font-medium">Proyecto contabilidad</span>
+    </div>
+    <div class="container_search">
+      <p-autoComplete [(ngModel)]="value" [suggestions]="items" (completeMethod)="search($event)" field="title"
+        [inputId]="'board-search'" (onSelect)="onBoardSelect($event)" placeholder="Search" [appendTo]="'body'"
+        styleClass="full-width-autocomplete">
+      </p-autoComplete>
+    </div>
+    <div class="flex justify-end">
+      <div class="flex gap-5 items-center">
+        <button pButton type="button" icon="pi pi-bell" class="p-button-rounded p-button-info p-button-outlined">
+        </button>
+        <button pButton type="button" icon="pi pi-user" label="Cerrar Sesión" (click)="logout()" class="p-button-rounded p-button-info p-button-outlined">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center">
+    <span class="text-lg font-medium">Tablero obsolescencia</span>
+    <p-avatarGroup>
+      <p-avatar *ngFor="let user of usersBoard.slice(0, 3)" [label]="user.name[0]">
+      </p-avatar>
+      <p-avatar *ngIf="usersBoard.length > 3" [label]="'+' + (usersBoard.length - 3)">
+      </p-avatar>
+    </p-avatarGroup>
+  </div>
+
+  <div class="flex overflow-x-auto space-x-6 p-4 bg-gray-100 justify-center">
+
+    <div *ngFor="let list of lists; let i = index" class="w-72 bg-white rounded shadow p-4 flex-shrink-0" dndDropzone
+      (dndDrop)="onDrop($event, list.cards)">
+
+      <h2 class="font-semibold text-lg mb-4">{{ list.title }}</h2>
+      <div dndPlaceholder class="bg-blue-100 border-dashed border-2 rounded mb-4"
+        style="display: block; min-height: 50px;">
+      </div>
+
+      <div *ngFor="let card of list.cards; let cardIndex = index" [dndDraggable]="card" dndEffectAllowed="move"
+        class="bg-gray-50 border rounded mb-4 p-3 shadow-sm">
+        <div class="">
+          <div class="flex flex-row items-center justify-between h-[10vh]">
+            <div *ngFor="let tag of card.tag" class="flex flex-row items-center justify-end h-[5vh] ">
+              <span class="text-white px-3 py-1 rounded-full mr-2 text-sm"
+                [ngStyle]="{ 'background-color': getColor(tag), 'color': 'white', 'padding': '4px', 'border-radius': '4px', 'margin-right': '4px' }">
+                {{ tag }}
+              </span>
+            </div>
+              <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-outlined" (click)="confirm(card.id)">
+              </button>
+          </div>
+        </div>
+        <div class="cursor-pointer h-[10vh] flex flex-col justify-center" (click)="onCardClick(card)">
+          <p class="mb-2 font-medium">{{ card.title }}</p>
+          <p-avatarGroup class="flex space-x-1">
+            <p-avatar *ngFor="let user of card.users.slice(0, 3)" [label]="user[0]" shape="circle"
+              class="!w-8 !h-8 text-sm"></p-avatar>
+            <p-avatar *ngIf="card.users.length > 3" [label]="'+' + (card.users.length - 3)" shape="circle"
+              class="!w-8 !h-8 text-sm"></p-avatar>
+          </p-avatarGroup>
+        </div>
+
+      </div>
+
+      <div class="flex w-full justify-center">
+        <button pButton type="button" label="Añadir tarjeta" icon="pi pi-plus"
+          class="p-button-rounded p-button-info p-button-outlined" (click)="addTask()"></button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<p-confirmDialog></p-confirmDialog>
+
+

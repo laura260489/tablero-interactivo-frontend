@@ -1,0 +1,67 @@
+{
+    "environment": {
+        "appDir": ".",
+        "releasePath": "dist"
+    },
+    "s3": {
+        "dev": {
+            "name":"xx-dev",
+            "acl": "public-read"
+        },
+        "stage":{
+            "name":"xx-stage",
+            "acl": "public-read"
+        },
+        "prod":{
+            "name":"xx-prod",
+            "acl": "public-read"
+        }
+    },
+    "cloudfront": {
+        "dev": {
+            "distributionId":"EDFDVBD6EXAMPLE",
+            "invalidationPaths":"/*"
+        },
+        "stage":{
+            "distributionId":"EDFDVBD6EXAMPLE",
+            "invalidationPaths":"/*"
+        },
+        "prod":{
+            "distributionId":"EDFDVBD6EXAMPLE",
+            "invalidationPaths":"/*"
+        }
+    },
+    "repositoryUrl": {
+        "dev": {
+            "repository_url": "bolivar-npm-core-web-kit-components-lib-dev-virtual"
+        },
+        "stage": {
+            "repository_url": "bolivar-npm-core-web-kit-components-lib-stg-virtual"
+        },
+        "prod": {
+            "repository_url": "bolivar-npm-core-web-kit-components-lib-prod-virtual"
+        }
+    },
+    "configuration": {
+        "develop": "dev",
+        "stage": "stage",
+        "master": "prod"
+    },
+    "environments": {
+        "dev": {
+            "name": "/{projectName}/dev/environment/front/nameFront",
+            "production": "/{projectName}/dev/environment/front/productionFront",
+            "environmentUrl": "/{projectName}/dev/environment/front/environmentUrlFront"
+        },
+        "stage":{
+            "name": "/{projectName}/stage/environment/front/nameFront",
+            "production": "/{projectName}/stage/environment/front/productionFront",
+            "environmentUrl": "/{projectName}/stage/environment/front/environmentUrlFront"
+        },
+        "prod":{
+            "name": "/{projectName}/prod/environment/front/nameFront",
+            "production": "/{projectName}/prod/environment/front/productionFront",
+            "environmentUrl": "/{projectName}/prod/environment/front/environmentUrlFront"
+        }
+    }
+}

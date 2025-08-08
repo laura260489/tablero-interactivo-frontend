@@ -1,0 +1,13 @@
+<p-dialog [(visible)]="display" *ngIf="config" [style]="{width: '300px', height: '300px'}" [draggable]="false" [closable]="false">
+    <ng-template pTemplate="header">
+      <i class="pi pi-danger"></i>
+    </ng-template>
+    <div class="flex flex-col items-center w-full">
+        <p class="text-3xl font-semibold">{{config.message}}</p>
+    </div>
+    <ng-template pTemplate="footer">
+      <div class="flex flex-col items-center w-full">
+        <p-button *ngIf="config.showButton" [label]="config.buttonConfig.label" type="button" (onClick)="navigate(config.buttonConfig.navigate)"></p-button>
+      </div>
+    </ng-template>
+</p-dialog>
