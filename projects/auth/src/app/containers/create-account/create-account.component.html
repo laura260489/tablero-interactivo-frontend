@@ -1,0 +1,72 @@
+<div class="h-full p-6">
+  <div class="flex justify-center items-center h-full">
+    <div class="flex flex-col pb-4 items-center w-[45vw]">
+      <div class="w-full p-9 rounded-lg border-2 bg-white max-w-screen-sm">
+        <div class="flex flex-col items-center justify-center gap-4">
+          <h2 class="text-primaryD100 font-semibold mb-4 lg:text-[22px] text-center pb-2 text-[16px]">
+            Crea tu cuenta
+          </h2>
+          <span class="text-sm text-[primaryBase] underline cursor-pointer" (click)="navigateToLogin()">¿Ya eres
+            cliente?
+            Iniciar sesión</span>
+          <form [formGroup]="createAccount" (ngSubmit)="onSubmit()" class="p-fluid flex flex-col gap-9 w-full">
+            <div class="field flex flex-col gap-3">
+              <label for="name">Nombre(s)</label>
+              <input id="name" type="name" pInputText formControlName="name" placeholder="Laura"
+                [ngClass]="{'input-invalid': createAccount.get('name')?.invalid && (createAccount.get('name')?.touched || createAccount.get('name')?.dirty)}" />
+              <app-errors-form [control]="createAccount.get('name')" label="nombre">
+              </app-errors-form>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="lastName">Apellido(s)</label>
+              <input id="lastName" type="text" pInputText formControlName="lastName" placeholder="Rojas"
+                [ngClass]="{'input-invalid': createAccount.get('lastName')?.invalid && (createAccount.get('lastName')?.touched || createAccount.get('lastName')?.dirty)}" />
+
+              <app-errors-form [control]="createAccount.get('lastName')" label="nombre">
+              </app-errors-form>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="phone">Número de teléfono</label>
+              <input id="phone" type="phone" pInputText formControlName="phone" placeholder="3214567976"
+                [ngClass]="{'input-invalid': createAccount.get('phone')?.invalid && (createAccount.get('phone')?.touched || createAccount.get('phone')?.dirty)}" />
+              <app-errors-form [control]="createAccount.get('phone')" label="telefono">
+              </app-errors-form>
+            </div>
+            <div class="field flex flex-col gap-3">
+              <label for="email">Correo electrónico</label>
+              <input id="email" type="email" pInputText formControlName="email" placeholder="tucorreo@ejemplo.com"
+                [ngClass]="{'input-invalid': createAccount.get('email')?.invalid && (createAccount.get('email')?.touched || createAccount.get('email')?.dirty)}" />
+              <app-errors-form [control]="createAccount.get('email')" label="correo">
+              </app-errors-form>
+            </div>
+
+            <div class="field flex flex-col gap-3">
+              <label for="password">Contraseña</label>
+              <p-password formControlName="password"
+                [ngClass]="{'input-invalid': createAccount.get('password')?.invalid && (createAccount.get('password')?.touched || createAccount.get('password')?.dirty)}">
+                <ng-template pTemplate="header">
+                  <h6>Elige una contraseña</h6>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <p-divider></p-divider>
+                  <p class="mt-2">Sugerencias</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                    <li>Al menos una minúscula</li>
+                    <li>Al menos una mayúscula</li>
+                    <li>Al menos un número</li>
+                    <li>Mínimo 8 caracteres</li>
+                  </ul>
+                </ng-template>
+              </p-password>
+              <app-errors-form [control]="createAccount.get('password')" label="contraseña">
+              </app-errors-form>
+            </div>
+            <p-button label="Crear cuenta" type="submit" [disabled]="createAccount.invalid"></p-button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-information (isClosed)="modalClose($event)"></app-modal-information>

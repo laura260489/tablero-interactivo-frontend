@@ -1,0 +1,39 @@
+<div class="h-[80vh]">
+    <div class="flex justify-center items-center h-full">
+        <div class="flex flex-col pb-4 items-center w-[35vw]">
+            <div class="w-full p-9 rounded-lg border-2 bg-white max-w-screen-sm">
+                <div class="flex flex-col items-center justify-center gap-4">
+                    <h2 class="text-primaryD100 font-semibold mb-4 lg:text-[22px] text-center pb-2 text-[16px]">
+                        Iniciar sesión
+                    </h2>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-fluid flex flex-col gap-9 w-full">
+                        <div class="field flex flex-col gap-3">
+                            <label for="email">Correo electrónico</label>
+                            <input id="email" type="email" pInputText formControlName="email"
+                                placeholder="tucorreo@ejemplo.com"
+                                [ngClass]="{'input-invalid': loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)}" />
+                            <app-errors-form [control]="loginForm.get('email')" label="correo">
+                            </app-errors-form>
+                        </div>
+
+                        <div class="field flex flex-col gap-3">
+                            <label for="password">Contraseña</label>
+                            <input id="password" type="password" pInputText formControlName="password"
+                                placeholder="Contraseña"
+                                [ngClass]="{'input-invalid': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)}" />
+                            <app-errors-form [control]="loginForm.get('password')" label="contraseña">
+                            </app-errors-form>
+                        </div>
+
+                        <p-button label="Iniciar sesión" type="submit" [disabled]="loginForm.invalid"></p-button>
+
+                    </form>
+
+                    <a class="text-sm text-[primaryBase] underline cursor-pointer" (click)="navigateCreateAccount()">¿No
+                        tiene cuenta? Registrese aquí</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
