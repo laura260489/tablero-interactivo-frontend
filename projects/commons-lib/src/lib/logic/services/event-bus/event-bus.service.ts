@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 /**
 ** Manejador de eventos para comunicación entre micro front-ends.
-* @autor laurarojasseguros and JesusMancilla-SB
+* @autor laurarojas
 */
 
 export class EventBusService {
@@ -22,7 +22,7 @@ export class EventBusService {
    * Dispara un evento al DOM
    * @param {object} data - contiene la información que se va a enviar al disparar
    * el evento.
-   * @autor laurarojasseguros and JesusMancilla-SB
+   * @autor laurarojas
    */
   sendMessage(data: object) {
     const event = new CustomEvent('onMessageEventBus', { detail: { data } });
@@ -31,7 +31,7 @@ export class EventBusService {
   /**
    * Obtiene el mensaje enviado.
    * @returns Un observable del behavior subject que dispara y recibe el mensaje
-   * @autor laurarojasseguros and JesusMancilla-SB
+   * @autor laurarojas
    */
   onMessage(): Observable<any> {
     return this.eventSubject.asObservable();
