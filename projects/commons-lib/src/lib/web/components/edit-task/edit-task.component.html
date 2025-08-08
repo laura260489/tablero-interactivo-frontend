@@ -48,7 +48,7 @@
             <app-errors-form [control]="editTask.get('state')" label="Estado"></app-errors-form>
           </div>
 
-          <p-button [label]="isEdit ? 'Editar Tarea' : 'Crear Tarea'"  type="submit" [disabled]="editTask.invalid"></p-button>
+          <p-button [label]="isCreate ? 'Editar Tarea' : 'Crear Tarea'"  type="submit" [disabled]="editTask.invalid"></p-button>
         </form>
       </div>
     </div>

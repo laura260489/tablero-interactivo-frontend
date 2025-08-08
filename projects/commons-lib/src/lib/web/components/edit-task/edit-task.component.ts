@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalInformationService, selectUser, User } from '@commons-lib';
 import { Store } from '@ngrx/store';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -14,7 +15,7 @@ export class EditTaskComponent implements OnInit {
   public idTask: string = '';
   public idUser: string;
 
-  public isEdit: boolean = false;
+  public isCreate: boolean = false;
 
   public editTask: FormGroup;
 
@@ -32,13 +33,16 @@ export class EditTaskComponent implements OnInit {
 
   user$ = this.store.select(selectUser);
 
-  constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService, private store: Store) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService, private store: Store, private router: Router) { }
 
   ngOnInit() {
 
-    this.idTask = this.config.data?.idTask;
-
-    if (this.idTask) this.isEdit = true;
+    if (Array.isArray(this.config.data?.idTask) && this.config.data.idTask.length === 0) {
+      this.isCreate = true;
+    } else {
+      this.isCreate = false;
+    }
+    
 
     this.editTask = this.fb.group({
       title: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
@@ -60,7 +64,7 @@ export class EditTaskComponent implements OnInit {
       const { title, priority, estimation, start_date, end_date, state } = this.editTask.value;
 
       const body = {
-        name:title,
+        name: title,
         priority,
         estimation,
         startDate: start_date.toISOString(),
@@ -69,7 +73,7 @@ export class EditTaskComponent implements OnInit {
         boardId: sessionStorage.getItem('board'),
         userId: this.idUser
       }
-      if (!this.editTask) {
+      if (!this.isCreate) {
         this.http.post<any>(
           process.env['urlBase'] + 'tasks',
           body,
@@ -78,7 +82,10 @@ export class EditTaskComponent implements OnInit {
           }
         ).subscribe({
           next: (response) => {
-            if (response.status_code === 200) this.showModal("Tarea creada de manera exitosa")
+            if (response.status_code === 201) {
+              this.showModal("Tarea creada de manera exitosa")
+              this.router.navigate(['/home/board', 121212]);
+            }
           },
           error: (error) => {
             console.log(error)
