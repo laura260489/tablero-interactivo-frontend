@@ -1,7 +1,7 @@
 <div class="flex flex-col min-h-[100vh] gap-5">
   <div class="w-full top-0 grid grid-cols-[1fr_2fr_1fr] gap-4 bg-[#adcef5] px-[50px] py-[15px]">
     <div class="flex items-center justify-start">
-      <span class="text-lg font-medium">Proyecto contabilidad</span>
+      <span class="text-lg font-medium">proyecto_contable</span>
     </div>
     <div class="container_search">
       <p-autoComplete [(ngModel)]="value" [suggestions]="items" (completeMethod)="search($event)" field="title"
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="flex items-center">
-    <span class="text-lg font-medium">Tablero obsolescencia</span>
+    <span class="text-lg font-medium">Obsolescencia</span>
     <p-avatarGroup>
       <p-avatar *ngFor="let user of usersBoard.slice(0, 3)" [label]="user.name[0]">
       </p-avatar>
