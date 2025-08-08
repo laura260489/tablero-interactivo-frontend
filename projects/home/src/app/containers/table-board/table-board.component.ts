@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { EditTaskComponent, TagColors } from '@commons-lib';
+import { EditTaskComponent, logout, TagColors } from '@commons-lib';
+import { Store } from '@ngrx/store';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -50,7 +51,7 @@ export class TableBoardComponent implements OnInit {
     }
   ];
 
-  constructor(private router: Router, private dialogService: DialogService, private cdr: ChangeDetectorRef, private confirmationService: ConfirmationService) { }
+  constructor(private router: Router, private dialogService: DialogService, private cdr: ChangeDetectorRef, private confirmationService: ConfirmationService, private store: Store ) { }
 
   ngOnInit() {
 
@@ -132,6 +133,11 @@ export class TableBoardComponent implements OnInit {
 
   getColor(code: string): string {
     return TagColors[code] || 'gray';
+  }
+
+  public logout(){
+    this.router.navigate(['/auth']); 
+    this.store.dispatch(logout());
   }
 
   ngOnDestroy(): void {

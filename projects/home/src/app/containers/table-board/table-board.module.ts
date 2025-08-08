@@ -12,6 +12,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DndModule } from 'ngx-drag-drop';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { ConfirmationService } from 'primeng/api';
     ReactiveFormsModule,
     ConfirmDialogModule,
     DndModule,
+    StoreModule,
     RouterModule.forChild([{
       path: ':id',
       component: TableBoardComponent
