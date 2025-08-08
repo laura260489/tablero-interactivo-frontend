@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalInformationService} from '@commons-lib';
+import { ModalInformationService } from '@commons-lib';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
@@ -41,7 +41,7 @@ export class EditTaskComponent implements OnInit {
 
     this.idTask = this.config.data?.idTask;
 
-    if(this.idTask) this.isEdit = true;
+    if (this.idTask) this.isEdit = true;
 
     this.editTask = this.fb.group({
       title: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
@@ -59,13 +59,37 @@ export class EditTaskComponent implements OnInit {
 
   onSubmit() {
     if (this.editTask.valid) {
-      const { title, priority, estimation,description, state } = this.editTask.value;
+      const { title, priority, estimation, description, state } = this.editTask.value;
+
+      const body = {
+        title,
+        priority,
+        estimation,
+        description,
+        state
+      }
+      if (!this.editTask) {
+        this.http.post<any>(
+          process.env['urlBase'] + 'login',
+          body,
+          {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+          }
+        ).subscribe({
+          next: (response) => {
+            if (response.status_code === 200) this.showModal("Tarea creada de manera exitosa")
+          },
+          error: (error) => {
+            console.log(error)
+          }
+        });
+      }
     } else {
       this.editTask.markAllAsTouched();
     }
   }
-
-  public showModal(message:string): void {
+  
+  public showModal(message: string): void {
     this.modalInformationService.setConfigModal({
       message: message,
       showButton: true,

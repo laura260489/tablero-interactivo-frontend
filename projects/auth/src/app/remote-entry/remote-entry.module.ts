@@ -8,6 +8,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { StoreModule } from '@ngrx/store';
 import { ErrorsFormModule } from '@commons-lib';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({

@@ -72,7 +72,7 @@ export class RemoteEntryComponent implements OnInit {
   }
 
   public navigateCreateAccount() {
-    this.router.navigate(['/crear-cuenta']);
+    this.router.navigate(['/auth/crear-cuenta']);
   }
 
 }
