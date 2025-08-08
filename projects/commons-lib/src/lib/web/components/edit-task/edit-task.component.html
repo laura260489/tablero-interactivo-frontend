@@ -25,14 +25,6 @@
               [ngClass]="{'input-invalid': editTask.get('estimation')?.invalid && (editTask.get('estimation')?.touched || editTask.get('estimation')?.dirty)}" />
             <app-errors-form [control]="editTask.get('estimation')" label="Estimación"></app-errors-form>
           </div>
-
-          <div class="field flex flex-col gap-2">
-            <label for="description">Descripción</label>
-            <textarea id="description" rows="4" pInputTextarea formControlName="description"
-              placeholder="Detalles de la tarea"
-              [ngClass]="{'input-invalid': editTask.get('description')?.invalid && (editTask.get('description')?.touched || editTask.get('description')?.dirty)}"></textarea>
-            <app-errors-form [control]="editTask.get('description')" label="Descripción"></app-errors-form>
-          </div>
           <div class="field flex flex-col gap-2">
             <label for="end_date">Fecha de inicio</label>
             <p-calendar id="end_date" formControlName="start_date" dateFormat="dd/mm/yy" showIcon="true"
@@ -46,15 +38,6 @@
               [showButtonBar]="true" placeholder="Selecciona una fecha"
               [ngClass]="{'input-invalid': editTask.get('end_date')?.invalid && (editTask.get('end_date')?.touched || editTask.get('end_date')?.dirty)}"></p-calendar>
             <app-errors-form [control]="editTask.get('end_date')" label="Fecha de finalización"></app-errors-form>
-          </div>
-
-          <div class="field flex flex-col gap-2">
-            <label for="tag">Etiquetas</label>
-            <p-multiSelect id="tag" [options]="tag" optionLabel="name" optionValue="code" formControlName="tag"
-              placeholder="Selecciona etiquetas" display="chip" [showToggleAll]="false"
-              [ngClass]="{'input-invalid': editTask.get('tag')?.invalid && (editTask.get('tag')?.touched || editTask.get('tag')?.dirty)}">
-            </p-multiSelect>
-            <app-errors-form [control]="editTask.get('tag')" label="Etiquetas"></app-errors-form>
           </div>
           <div class="field flex flex-col gap-2">
             <label for="state">Estado</label>

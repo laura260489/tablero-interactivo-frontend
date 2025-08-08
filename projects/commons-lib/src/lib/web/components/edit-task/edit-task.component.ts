@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalInformationService} from '@commons-lib';
+import { ModalInformationService, selectUser, User } from '@commons-lib';
+import { Store } from '@ngrx/store';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
@@ -11,6 +12,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 })
 export class EditTaskComponent implements OnInit {
   public idTask: string = '';
+  public idUser: string;
 
   public isEdit: boolean = false;
 
@@ -18,7 +20,7 @@ export class EditTaskComponent implements OnInit {
 
   public availableStates: any[] = [
     { name: 'En progreso', code: 'progress', disabled: false },
-    { name: 'Por hacer', code: 'todo', disabled: false },
+    { name: 'Por hacer', code: 'TODO', disabled: false },
     { name: 'Hecho', code: 'done', disabled: false }
   ];
 
@@ -28,44 +30,67 @@ export class EditTaskComponent implements OnInit {
     { name: 'Alta', code: 'high', disabled: false }
   ]
 
-  public tag: any[] = [
-    { name: 'Incidente', code: 'incident', disabled: false },
-    { name: 'Feature', code: 'feature', disabled: false },
-    { name: 'Urgente', code: 'urgent', disabled: false },
-  ]
+  user$ = this.store.select(selectUser);
 
-
-  constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, public config: DynamicDialogConfig, private modalInformationService: ModalInformationService, private store: Store) { }
 
   ngOnInit() {
 
     this.idTask = this.config.data?.idTask;
 
-    if(this.idTask) this.isEdit = true;
+    if (this.idTask) this.isEdit = true;
 
     this.editTask = this.fb.group({
       title: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
       priority: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
-      estimation: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      description: ['', [Validators.required, Validators.email]],
-      tag: [[], [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
+      estimation: ['', [Validators.required]],
       start_date: [null, [Validators.required]],
       end_date: [null, [Validators.required]],
-      user_asign: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
       state: ['', [Validators.required, Validators.pattern(/^[^0-9]*$/)]],
     });
+
+    this.user$.subscribe((user: User) => {
+      this.idUser = user.id;
+    })
   }
 
 
   onSubmit() {
     if (this.editTask.valid) {
-      const { title, priority, estimation,description, state } = this.editTask.value;
+      const { title, priority, estimation, start_date, end_date, state } = this.editTask.value;
+
+      const body = {
+        name:title,
+        priority,
+        estimation,
+        startDate: start_date.toISOString(),
+        endDate: end_date.toISOString(),
+        state,
+        boardId: sessionStorage.getItem('board'),
+        userId: this.idUser
+      }
+      if (!this.editTask) {
+        this.http.post<any>(
+          process.env['urlBase'] + 'tasks',
+          body,
+          {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+          }
+        ).subscribe({
+          next: (response) => {
+            if (response.status_code === 200) this.showModal("Tarea creada de manera exitosa")
+          },
+          error: (error) => {
+            console.log(error)
+          }
+        });
+      }
     } else {
       this.editTask.markAllAsTouched();
     }
   }
 
-  public showModal(message:string): void {
+  public showModal(message: string): void {
     this.modalInformationService.setConfigModal({
       message: message,
       showButton: true,
