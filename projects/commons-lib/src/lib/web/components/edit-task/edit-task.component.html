@@ -1,0 +1,75 @@
+<div class="h-full p-6">
+  <div class="flex justify-center items-center h-full">
+    <div class="flex flex-col pb-4 items-center w-[45vw]">
+      <div class="w-full p-9 rounded-lg border-2 bg-white max-w-screen-sm">
+        <form [formGroup]="editTask" (ngSubmit)="onSubmit()" class="p-fluid flex flex-col gap-6 w-full">
+          <div class="field flex flex-col gap-2">
+            <label for="title">Título</label>
+            <input id="title" type="text" pInputText formControlName="title" placeholder="Título de la tarea"
+              [ngClass]="{'input-invalid': editTask.get('title')?.invalid && (editTask.get('title')?.touched || editTask.get('title')?.dirty)}" />
+            <app-errors-form [control]="editTask.get('title')" label="Título"></app-errors-form>
+          </div>
+
+          <div class="field flex flex-col gap-2">
+            <label for="priority">Prioridad</label>
+            <p-dropdown id="priority" [options]="priority" optionLabel="name" optionValue="code"
+              formControlName="priority" placeholder="Selecciona prioridad"
+              [ngClass]="{'input-invalid': editTask.get('priority')?.invalid && (editTask.get('priority')?.touched || editTask.get('priority')?.dirty)}">
+            </p-dropdown>
+            <app-errors-form [control]="editTask.get('priority')" label="Prioridad"></app-errors-form>
+          </div>
+
+          <div class="field flex flex-col gap-2">
+            <label for="estimation">Estimación (en horas)</label>
+            <input id="estimation" type="number" pInputText formControlName="estimation" placeholder="Ej. 60"
+              [ngClass]="{'input-invalid': editTask.get('estimation')?.invalid && (editTask.get('estimation')?.touched || editTask.get('estimation')?.dirty)}" />
+            <app-errors-form [control]="editTask.get('estimation')" label="Estimación"></app-errors-form>
+          </div>
+
+          <div class="field flex flex-col gap-2">
+            <label for="description">Descripción</label>
+            <textarea id="description" rows="4" pInputTextarea formControlName="description"
+              placeholder="Detalles de la tarea"
+              [ngClass]="{'input-invalid': editTask.get('description')?.invalid && (editTask.get('description')?.touched || editTask.get('description')?.dirty)}"></textarea>
+            <app-errors-form [control]="editTask.get('description')" label="Descripción"></app-errors-form>
+          </div>
+          <div class="field flex flex-col gap-2">
+            <label for="end_date">Fecha de inicio</label>
+            <p-calendar id="end_date" formControlName="start_date" dateFormat="dd/mm/yy" showIcon="true"
+              [showButtonBar]="true" placeholder="Selecciona una fecha"
+              [ngClass]="{'input-invalid': editTask.get('start_date')?.invalid && (editTask.get('start_date')?.touched || editTask.get('start_date')?.dirty)}"></p-calendar>
+            <app-errors-form [control]="editTask.get('start_date')" label="Fecha de inicio"></app-errors-form>
+          </div>
+          <div class="field flex flex-col gap-2">
+            <label for="end_date">Fecha de finalización</label>
+            <p-calendar id="end_date" formControlName="end_date" dateFormat="dd/mm/yy" showIcon="true"
+              [showButtonBar]="true" placeholder="Selecciona una fecha"
+              [ngClass]="{'input-invalid': editTask.get('end_date')?.invalid && (editTask.get('end_date')?.touched || editTask.get('end_date')?.dirty)}"></p-calendar>
+            <app-errors-form [control]="editTask.get('end_date')" label="Fecha de finalización"></app-errors-form>
+          </div>
+
+          <div class="field flex flex-col gap-2">
+            <label for="tag">Etiquetas</label>
+            <p-multiSelect id="tag" [options]="tag" optionLabel="name" optionValue="code" formControlName="tag"
+              placeholder="Selecciona etiquetas" display="chip" [showToggleAll]="false"
+              [ngClass]="{'input-invalid': editTask.get('tag')?.invalid && (editTask.get('tag')?.touched || editTask.get('tag')?.dirty)}">
+            </p-multiSelect>
+            <app-errors-form [control]="editTask.get('tag')" label="Etiquetas"></app-errors-form>
+          </div>
+          <div class="field flex flex-col gap-2">
+            <label for="state">Estado</label>
+            <p-dropdown id="state" [options]="availableStates" optionLabel="name" optionValue="code"
+              formControlName="state" placeholder="Selecciona estado"
+              [ngClass]="{'input-invalid': editTask.get('state')?.invalid && (editTask.get('state')?.touched || editTask.get('state')?.dirty)}">
+            </p-dropdown>
+            <app-errors-form [control]="editTask.get('state')" label="Estado"></app-errors-form>
+          </div>
+
+          <p-button [label]="isEdit ? 'Editar Tarea' : 'Crear Tarea'"  type="submit" [disabled]="editTask.invalid"></p-button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-information (isClosed)="modalClose($event)"></app-modal-information>
