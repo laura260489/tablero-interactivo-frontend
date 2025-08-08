@@ -36,6 +36,7 @@ export class TableBoardComponent implements OnInit {
   ngOnInit() {
     this.http.get<TaskData[]>(process.env['urlBase'] + 'tasks/project/' + 'proyecto_contable').subscribe({
       next: (data) => {
+        sessionStorage.setItem('board', data[0].boardId);
         const listMap = {
           TODO: 'list-0',
           IN_PROGRESS: 'list-1',
