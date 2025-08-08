@@ -32,14 +32,12 @@ export class RemoteEntryComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.router.navigate(['/home/board', 121212]);
-
     const body = {
       email: email,
       password: password
     }
 
-    /*this.http.post<any>(
+    this.http.post<any>(
       process.env['urlBase'] + 'login',
       body,
       {
@@ -52,7 +50,7 @@ export class RemoteEntryComponent implements OnInit {
       error: (error) => {
         console.log(error)
       }
-    });*/
+    });
   }
 
   private decodeToken(token: string) {
@@ -70,7 +68,7 @@ export class RemoteEntryComponent implements OnInit {
     };
 
     this.store.dispatch(loginSuccess({ user }));
-    //this.router.navigate(['/home/table-board/board', 121212]);
+    this.router.navigate(['/home/board', 121212]);
   }
 
   public navigateCreateAccount() {
